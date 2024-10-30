@@ -1,18 +1,23 @@
 version: '3.8'
 services:
-  database:
+  database_prod:
     image: mysql
-    container_name: my-database
+    container_name: database-prod
     restart: always
     volumes:
-      - ./mysql_data:/var/lib/mysql
+      - ./mysql_prod_data:/var/lib/mysql
     ports:
-      - 8000:3306
+      - 3308:3306
     environment:
-      MYSQL_ROOT_PASSWORD: 87654321
-      MYSQL_DATABASE: db-docker
-      MYSQL_USER: bnb-user
+      MYSQL_ROOT_PASSWORD: Root123456
+      MYSQL_USER: bnb-user-prod
       MYSQL_PASSWORD: Admin1234
+      MYSQL_DATABASE: db-prod
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      interval: 5s
+      timeout: 20s
+      retries: 10
   database_dev:
     image: mysql
     container_name: database-dev
@@ -26,3 +31,19 @@ services:
       MYSQL_USER: bnb-user-dev
       MYSQL_PASSWORD: Admin1234
       MYSQL_DATABASE: db-dev
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      interval: 5s
+      timeout: 20s
+      retries: 10
+  my_api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: nestjs
+    restart: always
+    ports:
+      - 80:3000
+    depends_on:
+      database_prod:
+        condition: service_healthy
