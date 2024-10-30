@@ -1,14 +1,17 @@
 import { Injectable } from '@nestjs/common';
+import { PrismaService } from './prisma.service';
 
 @Injectable()
 export class AppService {
+
+  constructor(private readonly prisma: PrismaService) { }
 
   getHello(): string {
     return 'Página inicial da API';
   }
 
   listUsers() {
-    return 'Listando os usuários do Banco de Dados a partir do arquivo service';
+    return this.prisma.users.findMany();
   }
 
 }
