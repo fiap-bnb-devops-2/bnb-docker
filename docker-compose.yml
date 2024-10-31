@@ -44,6 +44,8 @@ services:
     restart: always
     ports:
       - 80:3000
+    env_file:
+      - ./api/.env.production
     depends_on:
       database_prod:
         condition: service_healthy

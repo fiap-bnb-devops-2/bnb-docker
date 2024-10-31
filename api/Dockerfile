@@ -5,11 +5,13 @@ USER node
 WORKDIR /api
 
 COPY --chown=node:node . .
-COPY ./.env.production ./.env
+#COPY ./.env.production ./.env
 
 RUN npm install
 
 RUN npm run build
+
+RUN npx prisma generate
 
 EXPOSE 3000
 
