@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 export class AppService {
 
   getHello(): string {
-    return 'Página inicial da API';
+    return 'Hello World!';
   }
 
 }
