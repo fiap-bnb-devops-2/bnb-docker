@@ -1,23 +1,5 @@
 version: '3.8'
 services:
-  database_prod:
-    image: mysql
-    container_name: database-prod
-    restart: always
-    volumes:
-      - ./mysql_prod_data:/var/lib/mysql
-    ports:
-      - 3308:3306
-    environment:
-      MYSQL_ROOT_PASSWORD: Root123456
-      MYSQL_USER: bnb-user-prod
-      MYSQL_PASSWORD: Admin1234
-      MYSQL_DATABASE: db-prod
-    healthcheck:
-      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
-      interval: 5s
-      timeout: 20s
-      retries: 10
   database_dev:
     image: mysql
     container_name: database-dev
@@ -31,6 +13,42 @@ services:
       MYSQL_USER: bnb-user-dev
       MYSQL_PASSWORD: Admin1234
       MYSQL_DATABASE: db-dev
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      interval: 5s
+      timeout: 20s
+      retries: 10
+  database_test:
+    image: mysql
+    container_name: database-test
+    restart: always
+    volumes:
+      - ./mysql_test_data:/var/lib/mysql
+    ports:
+      - 3308:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: Root123456
+      MYSQL_USER: bnb-user-test
+      MYSQL_PASSWORD: Admin1234
+      MYSQL_DATABASE: db-test
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
+      interval: 5s
+      timeout: 20s
+      retries: 10
+  database_prod:
+    image: mysql
+    container_name: database-prod
+    restart: always
+    volumes:
+      - ./mysql_prod_data:/var/lib/mysql
+    ports:
+      - 3309:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: Root123456
+      MYSQL_USER: bnb-user-prod
+      MYSQL_PASSWORD: Admin1234
+      MYSQL_DATABASE: db-prod
     healthcheck:
       test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost']
       interval: 5s
