@@ -232,6 +232,61 @@ describe('UsersController (e2e)', () => {
 
     });
 
+    describe('DELETE routes', () => {
+
+        it('/users/2 (DELETE)', () => {
+
+            return request(app.getHttpServer())
+                .delete('/users/2')
+                .expect(404)
+                .then((response) => {
+
+                    expect(response).toHaveProperty('text');
+
+                    const res = JSON.parse(response.text);
+
+                    expect(res).toHaveProperty('message', 'Usuário não encontrado.');
+
+                });
+
+        });
+
+        it('/users/abcd (DELETE)', () => {
+
+            return request(app.getHttpServer())
+                .delete('/users/abcd')
+                .expect(400)
+                .then((response) => {
+
+                    expect(response).toHaveProperty('text');
+
+                    const res = JSON.parse(response.text);
+
+                    expect(res).toHaveProperty('message', 'ID inválido.');
+
+                });
+
+        });
+
+        it('/users/1 (DELETE)', () => {
+
+            return request(app.getHttpServer())
+                .delete('/users/1')
+                .expect(200)
+                .then((response) => {
+
+                    expect(response).toHaveProperty('text');
+
+                    const res = JSON.parse(response.text);
+
+                    expect(res).toHaveProperty('id', 1);
+
+                });
+
+        });
+
+    });
+
     afterAll(() => {
 
         // execSync('npx prisma db push --force-reset', {
