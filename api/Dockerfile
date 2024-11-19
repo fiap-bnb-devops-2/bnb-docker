@@ -5,7 +5,7 @@ USER node
 WORKDIR /api
 
 COPY --chown=node:node . .
-#COPY ./.env.production ./.env
+COPY ./.env.production ./.env
 
 RUN npm install
 
