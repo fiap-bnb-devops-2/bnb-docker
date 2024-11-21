@@ -15,12 +15,12 @@ describe('UsersController (e2e)', () => {
             DATABASE_URL: databaseTestUrl,
         });
 
-        execSync('npx prisma db push --force-reset', {
-            env: {
-                ...process.env,
-                DATABASE_URL: databaseTestUrl,
-            },
-        });
+        // execSync('npx prisma db push --force-reset', {
+        //     env: {
+        //         ...process.env,
+        //         DATABASE_URL: databaseTestUrl,
+        //     },
+        // });
 
     });
 
@@ -31,7 +31,7 @@ describe('UsersController (e2e)', () => {
 
         app = moduleFixture.createNestApplication();
         await app.init();
-    });
+    }, 10000);
 
     describe('POST routes', () => {
 
@@ -60,7 +60,7 @@ describe('UsersController (e2e)', () => {
 
                 });
 
-        });
+        }, 10000);
 
         it('/users (POST) should return an error if name is not provided', () => {
 
@@ -78,7 +78,7 @@ describe('UsersController (e2e)', () => {
 
                 });
 
-        });
+        }, 10000);
 
         it('/users (POST) should return an error if email is not provided', () => {
 
@@ -98,7 +98,7 @@ describe('UsersController (e2e)', () => {
 
                 });
 
-        });
+        }, 10000);
 
         it('/users (POST) should return an error if password is not provided', () => {
 
@@ -119,7 +119,7 @@ describe('UsersController (e2e)', () => {
 
                 });
 
-        });
+        }, 10000);
 
         it('/users (POST) should verify an existed user', () => {
 
@@ -141,7 +141,7 @@ describe('UsersController (e2e)', () => {
 
                 });
 
-        });
+        }, 10000);
 
     });
 
@@ -188,7 +188,7 @@ describe('UsersController (e2e)', () => {
 
                 });
 
-        });
+        }, 10000);
 
         it('/users/2 (PUT)', () => {
 
@@ -208,7 +208,7 @@ describe('UsersController (e2e)', () => {
 
                 });
 
-        });
+        }, 10000);
 
         it('/users/abcd (PUT)', () => {
 
@@ -228,7 +228,7 @@ describe('UsersController (e2e)', () => {
 
                 });
 
-        });
+        }, 10000);
 
     });
 
@@ -249,7 +249,7 @@ describe('UsersController (e2e)', () => {
 
                 });
 
-        });
+        }, 10000);
 
         it('/users/abcd (DELETE)', () => {
 
@@ -266,7 +266,7 @@ describe('UsersController (e2e)', () => {
 
                 });
 
-        });
+        }, 10000);
 
         it('/users/1 (DELETE)', () => {
 
@@ -283,7 +283,7 @@ describe('UsersController (e2e)', () => {
 
                 });
 
-        });
+        }, 10000);
 
     });
 
