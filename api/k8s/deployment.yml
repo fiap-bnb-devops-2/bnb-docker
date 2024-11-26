@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nestjs-api
+  labels:
+    app: nestjs-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nestjs-api
+  template:
+    metadata:
+      labels:
+        app: nestjs-api
+    spec:
+      containers:
+        - name: bnb-api
+          image: docker.io/orafaribeiro/bnb-api:0.1.1
+          resources:
+            limits:
+              cpu: "0.5"
+              memory: 100Mi
+          ports:
+            - containerPort: 3000
