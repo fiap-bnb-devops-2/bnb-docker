@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 export class AppService {
 
   getHello(): string {
-    return 'Hello World!';
+    return 'Deploy na AWS por meio do EKS!';
   }
 
 }
