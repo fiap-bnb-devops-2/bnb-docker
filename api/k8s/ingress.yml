@@ -6,10 +6,15 @@ metadata:
     app: nestjs-api
   annotations:
     kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   ingressClassName: nginx
+  tls:
+    - hosts:
+        - myapi.dev.br
+      secretName: letsencrypt-prod
   rules:
-    - host: www.myapi.dev.br
+    - host: myapi.dev.br
       http:
         paths:
           - path: /
