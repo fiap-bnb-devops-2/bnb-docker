@@ -56,5 +56,6 @@ jobs:
                 export DOCKER_REGISTRY=$DOCKER_REGISTRY
                 export DOCKER_REPOSITORY=$DOCKER_REPOSITORY
                 export IMAGE_TAG=$IMAGE_TAG
-                cat ./api/k8s/deployment.yml | envsubst
-            # envsubst < ./api/k8s/deployment.yml | cat - | kubectl apply -f -
+                envsubst < ./api/k8s/deployment.yml | kubectl apply -f -
+                
+            # cat ./api/k8s/deployment.yml | envsubst
