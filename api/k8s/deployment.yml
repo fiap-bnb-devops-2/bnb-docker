@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: bnb-api
-          image: docker.io/DOCKER_USERNAME/DOCKER_REPOSITORY:IMAGE_TAG
+          image: DOCKER_REGISTRY/DOCKER_REPOSITORY:IMAGE_TAG
           resources:
             limits:
               cpu: "0.5"
