@@ -1,0 +1,34 @@
+name: Deploy API to AWS EKS
+on:
+    push:
+        branches: [main]
+env:
+    IMAGE_TAG: ${{ github.sha }}
+jobs:
+    deploy-api:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v3
+            
+            - name: Confirmando início da execução
+              run: echo "Testando novo deploy"
+
+            - name: Login no Docker
+              uses: docker/login-action@v2
+              with:
+                username: ${{ secrets.DOCKER_USERNAME }}
+                password: ${{ secrets.DOCKER_PASSWORD }}
+
+            - name: Build e tag do Docker e push para o Docker Hub
+              run:  |
+                docker build --pull --rm -f ./api/Dockerfile -t orafaribeiro/bnb-api:$IMAGE_TAG api
+                docker push orafaribeiro/bnb-api:$IMAGE_TAG
+
+            # Fazer o push para o Docker Hub com a nova versão
+            
+            # Conectar AWS
+
+            # Configurar o context do cluster, por meio do kubeconfig
+
+            # Aplicar o arquivo deployment com a nova versão do Docker
