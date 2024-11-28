@@ -28,7 +28,6 @@ jobs:
                 docker build --pull --rm -f ./api/Dockerfile -t $DOCKER_USERNAME/$DOCKER_REPOSITORY:$IMAGE_TAG api
                 docker push $DOCKER_USERNAME/$DOCKER_REPOSITORY:$IMAGE_TAG
             
-            # Conectar AWS
             - name: Fazer login na AWS
               uses: aws-actions/configure-aws-credentials@v1
               with:
@@ -40,5 +39,12 @@ jobs:
               run: aws eks list-clusters
 
             # Configurar o context do cluster, por meio do kubeconfig
+            - name: Atualizando arquivo kubeconfig
+              run: aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name ${{ secrets.EKS_CLUSTER }}
+
+            - name: Testando kubectl
+              run: |
+                kubectl config get-contexts
+                kubectl get pods
 
             # Aplicar o arquivo deployment com a nova versão do Docker
