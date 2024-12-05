@@ -6,25 +6,41 @@ pipeline {
 
         stage('Login no Docker') {
 
-            steps {}
+            steps {
+
+                sh 'echo "Login no Docker"'
+
+            }
 
         }
 
         stage('Build e Push para o Docker') {
 
-            steps {}
+            steps {
+
+                sh 'echo "Build e Push para o Docker"'
+
+            }
 
         }
 
         stage('Login na Azure') {
 
-            steps {}
+            steps {
+
+                sh 'echo "Login na Azure"'
+
+            }
 
         }
 
         stage('Atualizar Cluster Kubernetes') {
 
-            steps {}
+            steps {
+
+                sh 'echo "Atualizar Cluster Kubernetes"'
+
+            }
 
         }
 
