@@ -20,7 +20,7 @@ pipeline {
 
                 script {
 
-                    docker.withRegistry('https://index.docker.io/v1/', credentialsId: 'docker-credentials') {
+                    docker.withRegistry('https://index.docker.io/v1/', 'docker-credentials') {
 
                         echo "Logado no Docker"
 
