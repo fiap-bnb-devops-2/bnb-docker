@@ -18,7 +18,15 @@ pipeline {
 
             steps {
 
-                sh 'echo "Login no Docker"'
+                script {
+
+                    withCredentials([usernamePassword(credentialsId: 'docker-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+
+                        sh 'echo $DOCKER_USERNAME'
+
+                    }
+
+                }
 
             }
 
