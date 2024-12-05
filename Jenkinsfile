@@ -4,6 +4,16 @@ pipeline {
 
     stages {
 
+        stage('Conferindo Webhook do Jenkins') {
+
+            steps {
+
+                sh 'echo "Conferindo Webhook do Jenkins"'
+
+            }
+
+        }
+
         stage('Login no Docker') {
 
             steps {
