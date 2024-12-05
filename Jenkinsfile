@@ -36,6 +36,7 @@ pipeline {
 
             steps {
 
+                docker.build("orafaribeiro/bnb-api:0.0.1", '-f ./api/Dockerfile ./api')
                 sh 'echo "Build e Push para o Docker"'
 
             }
