@@ -1,7 +1,7 @@
 name: Deploy API to AWS EKS
 on:
     push:
-        branches: [main]
+        branches: [master]
 env:
     IMAGE_TAG: ${{ github.sha }}
     DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
@@ -57,5 +57,3 @@ jobs:
                 export DOCKER_REPOSITORY=$DOCKER_REPOSITORY
                 export IMAGE_TAG=$IMAGE_TAG
                 envsubst < ./api/k8s/deployment.yml | kubectl apply -f -
-                
-            # cat ./api/k8s/deployment.yml | envsubst
