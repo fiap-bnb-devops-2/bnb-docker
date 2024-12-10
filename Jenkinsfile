@@ -2,7 +2,7 @@ pipeline {
 
     agent any
 
-    enviroment {
+    environment {
         resourceGroup = credentials('AZURE_RESOURCE_GROUP')
         clusterName = credentials('AKS_CLUSTER_NAME')
     }
