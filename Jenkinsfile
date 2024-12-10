@@ -39,13 +39,6 @@ pipeline {
                 sh "docker build --rm --pull -f ./api/Dockerfile -t orafaribeiro/bnb-api:${env.GIT_COMMIT} ./api";
                 sh 'echo "Build da imagem Docker"'
 
-                /*script {
-
-                    docker.build("orafaribeiro/bnb-api:${env.GIT_COMMIT}", '-f ./api/Dockerfile ./api')
-                    sh 'echo "Build e Push para o Docker"'
-
-                }*/
-
             }
 
         }
@@ -64,6 +57,18 @@ pipeline {
         stage('Login na Azure') {
 
             steps {
+
+                script {
+
+                    withCredentials([string(credentialsId: 'AZURE_CLIENT_ID', variable: 'AZURE_CLIENT_ID'), string(credentialsId: 'AZURE_PASSWORD', variable: 'AZURE_PASSWORD'), string(credentialsId: 'AZURE_TENANT', variable: 'AZURE_TENANT'), string(credentialsId: 'AZURE_SUBSCRIPTION', variable: 'AZURE_SUBSCRIPTION')]) {
+
+                        sh "az login --service-principal -u $AZURE_CLIENT_ID -p $AZURE_PASSWORD --tenant $AZURE_TENANT";
+
+                        sh "az account set --subscription $AZURE_SUBSCRIPTION";
+
+                    }
+
+                }
 
                 sh 'echo "Login na Azure"'
 
