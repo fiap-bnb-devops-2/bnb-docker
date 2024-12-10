@@ -20,12 +20,6 @@ pipeline {
 
                 script {
 
-                    /*docker.withRegistry('https://index.docker.io/v1/', 'docker-credentials') {
-
-                        echo "Logado no Docker"
-
-                    }*/
-
                     withCredentials([usernamePassword(credentialsId: 'docker-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
 
                         sh "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD https://index.docker.io/v1/";
@@ -38,16 +32,30 @@ pipeline {
 
         }
 
-        stage('Build e Push para o Docker') {
+        stage('Build da imagem Docker') {
 
             steps {
 
-                script {
+                sh "docker build --rm --pull -f ./api/Dockerfile -t orafaribeiro/bnb-api:${env.GIT_COMMIT} ./api";
+                sh 'echo "Build da imagem Docker"'
 
-                    docker.build("orafaribeiro/bnb-api:0.0.1", '-f ./api/Dockerfile ./api')
+                /*script {
+
+                    docker.build("orafaribeiro/bnb-api:${env.GIT_COMMIT}", '-f ./api/Dockerfile ./api')
                     sh 'echo "Build e Push para o Docker"'
 
-                }
+                }*/
+
+            }
+
+        }
+
+        stage('Push para o Docker Hub') {
+
+            steps {
+
+                sh "docker push orafaribeiro/bnb-api:${env.GIT_COMMIT}"
+                sh 'echo "Push para o Docker Hub"'
 
             }
 

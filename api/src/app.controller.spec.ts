@@ -16,7 +16,7 @@ describe('AppController', () => {
 
   describe('root', () => {
     it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Realizando deploy com GitHub Actions e AWS EKS - Versão final!');
+      expect(appController.getHello()).toBe('Realizando deploy com Jenkins!');
     });
   });
 });

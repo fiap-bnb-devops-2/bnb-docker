@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 export class AppService {
 
   getHello(): string {
-    return 'Realizando deploy com GitHub Actions e AWS EKS - Versão final!';
+    return 'Realizando deploy com Jenkins!';
   }
 
 }
