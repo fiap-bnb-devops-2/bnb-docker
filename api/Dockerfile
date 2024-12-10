@@ -1,10 +1,10 @@
 FROM node:20
 
-USER node
+USER jenkins
 
 WORKDIR /api
 
-COPY --chown=node:node . .
+COPY --chown=jenkins:jenkins . .
 COPY ./.env.production ./.env
 
 RUN npm install

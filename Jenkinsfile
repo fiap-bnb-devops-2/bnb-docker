@@ -9,8 +9,6 @@ pipeline {
             steps {
 
                 sh 'echo "Conferindo Webhook do Jenkins"'
-                sh 'chown -R jenkins:jenkins /var/lib/jenkins/workspace/deploy-api/api/node_modules/'
-                sh 'chmod -R 777 /var/lib/jenkins/workspace/deploy-api/api/node_modules/'
 
             }
 
