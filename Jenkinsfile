@@ -2,6 +2,11 @@ pipeline {
 
     agent any
 
+    enviroment {
+        resourceGroup = credentials('AZURE_RESOURCE_GROUP')
+        clusterName = credentials('AKS_CLUSTER_NAME')
+    }
+
     stages {
 
         stage('Conferindo Webhook do Jenkins') {
@@ -71,6 +76,18 @@ pipeline {
                 }
 
                 sh 'echo "Login na Azure"'
+
+            }
+
+        }
+
+        stage('Atualizar arquivo kubeconfig') {
+
+            steps {
+
+                sh "az aks get-credentials --resource-group $resourceGroup --name $clusterName --overwrite-existing"
+
+                sh 'kubectl get pods'
 
             }
 
