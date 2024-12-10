@@ -20,9 +20,15 @@ pipeline {
 
                 script {
 
-                    docker.withRegistry('https://index.docker.io/v1/', 'docker-credentials') {
+                    /*docker.withRegistry('https://index.docker.io/v1/', 'docker-credentials') {
 
                         echo "Logado no Docker"
+
+                    }*/
+
+                    withCredentials([usernamePassword(credentialsId: 'docker-credentials', usernameVariable: 'DOCKER_USERNAME', passowordVariable: 'DOCKER_PASSWORD')]) {
+
+                        sh "echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin";
 
                     }
 
