@@ -6,8 +6,9 @@ pipeline {
         resourceGroup = credentials('AZURE_RESOURCE_GROUP')
         clusterName = credentials('AKS_CLUSTER_NAME')
         dockerRegistry = 'docker.io'
-        dockerRepository = 'orafaribeiro/bnb-api'
         deploymentFile = './api/k8s/deployment.yml'
+        dockerUsername = credentials('DOCKER_USERNAME')
+        dockerRepository = credentials('DOCKER_REPOSITORY')
     }
 
     stages {
@@ -44,7 +45,7 @@ pipeline {
 
             steps {
 
-                sh "docker build --rm --pull -f ./api/Dockerfile -t orafaribeiro/bnb-api:${env.GIT_COMMIT} ./api";
+                sh "docker build --rm --pull -f ./api/Dockerfile -t $dockerUsername/$dockerRepository:${env.GIT_COMMIT} ./api";
                 sh 'echo "Build da imagem Docker"'
 
             }
@@ -55,7 +56,7 @@ pipeline {
 
             steps {
 
-                sh "docker push orafaribeiro/bnb-api:${env.GIT_COMMIT}"
+                sh "docker push $dockerUsername/$dockerRepository:${env.GIT_COMMIT}"
                 sh 'echo "Push para o Docker Hub"'
 
             }
@@ -101,6 +102,7 @@ pipeline {
             steps {
 
                 sh "sed -i 's/DOCKER_REGISTRY/$dockerRegistry/g' $deploymentFile"
+                sh "sed -i 's/DOCKER_USERNAME/$dockerUsername/g' $deploymentFile"
                 sh "sed -i 's/DOCKER_REPOSITORY/$dockerRepository/g' $deploymentFile"
                 sh "sed -i 's/IMAGE_TAG/${env.GIT_COMMIT}/g' $deploymentFile"
                 sh "cat $deploymentFile"
