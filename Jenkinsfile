@@ -100,9 +100,9 @@ pipeline {
 
             steps {
 
-                sh "sed -i 's/DOCKER_REGISTRY/'$dockerRegistry'/g' $deploymentFile"
-                sh "sed -i 's/DOCKER_REPOSITORY/'$dockerRepository'/g' $deploymentFile"
-                sh "sed -i 's/IMAGE_TAG/'${env.GIT_COMMIT}'/g' $deploymentFile"
+                sh "sed -i 's/DOCKER_REGISTRY/$dockerRegistry/g' $deploymentFile"
+                sh "sed -i 's/DOCKER_REPOSITORY/$dockerRepository/g' $deploymentFile"
+                sh "sed -i 's/IMAGE_TAG/${env.GIT_COMMIT}/g' $deploymentFile"
                 sh "cat $deploymentFile"
 
                 sh "kubectl apply -f $deploymentFile"
