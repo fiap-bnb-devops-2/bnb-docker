@@ -7,6 +7,8 @@ WORKDIR /api
 COPY --chown=node:node . .
 COPY ./.env.production ./.env
 
+RUN chmod -R 777 /api
+
 RUN npm install
 
 RUN npm run build
