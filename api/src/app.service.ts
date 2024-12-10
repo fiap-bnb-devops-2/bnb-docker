@@ -4,7 +4,7 @@ import { Injectable } from '@nestjs/common';
 export class AppService {
 
   getHello(): string {
-    return 'Realizando deploy com Jenkins na Azure - Versão final!';
+    return 'Realizando deploy com Jenkins na Azure - Versão final com credenciais!';
   }
 
 }

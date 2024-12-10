@@ -5,7 +5,7 @@ USER root
 WORKDIR /api
 
 COPY --chown=root:root . .
-COPY ./.env.production ./.env
+#COPY ./.env.production ./.env
 
 RUN chmod -R 777 /api
 

@@ -23,6 +23,32 @@ pipeline {
 
         }
 
+        stage('Atualizar arquivo .env') {
+
+            steps {
+
+                script {
+
+                    withCredentials([
+                        string(credentialsId: 'DATABASE_USER', variable: 'DATABASE_USER'),
+                        string(credentialsId: 'DATABASE_PASSWORD', variable: 'DATABASE_PASSWORD'),
+                        string(credentialsId: 'DATABASE_HOST', variable: 'DATABASE_HOST'),
+                        string(credentialsId: 'DATABASE_PORT', variable: 'DATABASE_PORT'),
+                        string(credentialsId: 'DATABASE_NAME', variable: 'DATABASE_NAME'),
+                    ]) {
+
+                        sh 'echo "DATABASE_URL=\"mysql://$DATABASE_USER:$DATABASE_PASSWORD@$DATABASE_HOST:$DATABASE_PORT/$DATABASE_NAME"\" >> ./api/.env'
+
+                        sh 'echo "DATABASE_TEST_URL=\"mysql://$DATABASE_USER:$DATABASE_PASSWORD@$DATABASE_HOST:$DATABASE_PORT/$DATABASE_NAME"\" >> ./api/.env'
+
+                    }
+
+                }
+
+            }
+
+        }
+
         stage('Login no Docker') {
 
             steps {
