@@ -9,8 +9,8 @@ pipeline {
             steps {
 
                 sh 'echo "Conferindo Webhook do Jenkins"'
-                sh 'sudo chown -R jenkins:jenkins /var/lib/jenkins/workspace/deploy-api/api'
-                sh 'sudo chmod -R 777 /var/lib/jenkins/workspace/deploy-api/api'
+                sh 'chown -R jenkins:jenkins /var/lib/jenkins/workspace/deploy-api/api'
+                sh 'chmod -R 777 /var/lib/jenkins/workspace/deploy-api/api'
 
             }
 
