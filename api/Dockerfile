@@ -1,12 +1,13 @@
 FROM node:20
 
-USER node
+USER root
 
 WORKDIR /api
 
-RUN chmod -R 777 /api
-COPY --chown=node:node . .
+COPY --chown=root:root . .
 COPY ./.env.production ./.env
+
+RUN chmod -R 777 /api
 
 RUN npm install
 
