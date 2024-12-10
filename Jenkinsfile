@@ -5,6 +5,9 @@ pipeline {
     environment {
         resourceGroup = credentials('AZURE_RESOURCE_GROUP')
         clusterName = credentials('AKS_CLUSTER_NAME')
+        dockerRegistry = 'docker.io'
+        dockerRepository = 'orafaribeiro/bnb-api'
+        deploymentFile = './api/k8s/deployment.yml'
     }
 
     stages {
@@ -97,6 +100,13 @@ pipeline {
 
             steps {
 
+                sh "sed -i 's/DOCKER_REGISTRY/'$dockerRegistry'/g' $deploymentFile"
+                sh "sed -i 's/DOCKER_REPOSITORY/'$dockerRepository'/g' $deploymentFile"
+                sh "sed -i 's/IMAGE_TAG/'${env.GIT_COMMIT}'/g' $deploymentFile"
+                sh "cat $deploymentFile"
+
+                sh "kubectl apply -f $deploymentFile"
+                
                 sh 'echo "Atualizar Cluster Kubernetes"'
 
             }
