@@ -1,14 +1,10 @@
 FROM node:20
 
-RUN groupadd -g 1000 jenkins-user && useradd -m -u 1000 -g jenkins-user jenkins-user
+USER node
 
 WORKDIR /api
 
-RUN chown -R jenkins-user:jenkins-user /api
-
-USER jenkins-user
-
-COPY --chown=jenkins-user:jenkins-user . .
+COPY --chown=node:node . .
 COPY ./.env.production ./.env
 
 RUN npm install
