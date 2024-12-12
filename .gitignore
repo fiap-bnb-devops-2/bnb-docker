@@ -2,3 +2,4 @@ mysql_data/
 mysql_dev_data/
 mysql_prod_data/
 mysql_test_data/
+rabbitmq_data/

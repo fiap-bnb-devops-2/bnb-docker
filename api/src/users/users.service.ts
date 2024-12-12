@@ -12,36 +12,48 @@ export class UsersService {
 
     async create(userName: string, userEmail: string, userPassword: string) {
 
-        if (!userName) {
-            throw new BadRequestException('Informe o nome do usuário');
-        }
+        return new Promise((resolve) => {
 
-        if (!userEmail) {
-            throw new BadRequestException('Informe o email do usuário');
-        }
+            setTimeout(async () => {
 
-        if (!userPassword) {
-            throw new BadRequestException('Informe a senha do usuário');
-        }
+                if (!userName) {
+                    throw new BadRequestException('Informe o nome do usuário');
+                }
 
-        const user = await this.prisma.users.findFirst({
-            where: {
-                email: userEmail,
-            },
-        });
+                if (!userEmail) {
+                    throw new BadRequestException('Informe o email do usuário');
+                }
 
-        if (user) {
+                if (!userPassword) {
+                    throw new BadRequestException('Informe a senha do usuário');
+                }
 
-            throw new BadRequestException('Já há um usuário com este email');
+                const user = await this.prisma.users.findFirst({
+                    where: {
+                        email: userEmail,
+                    },
+                });
 
-        }
+                if (user) {
 
-        return this.prisma.users.create({
-            data: {
-                name: userName,
-                email: userEmail,
-                password: userPassword,
-            },
+                    throw new BadRequestException('Já há um usuário com este email');
+
+                }
+
+                const newUser = await this.prisma.users.create({
+                    data: {
+                        name: userName,
+                        email: userEmail,
+                        password: userPassword,
+                    },
+                });
+
+                console.log("CRIANDO USUARIO");
+
+                resolve(newUser);
+
+            }, 35000);
+
         });
 
     }
