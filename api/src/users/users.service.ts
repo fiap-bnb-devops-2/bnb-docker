@@ -1,13 +1,29 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma.service';
+import { RedisCacheService } from '../redis-cache/redis-cache.service';
 
 @Injectable()
 export class UsersService {
 
-    constructor(private readonly prisma: PrismaService) { }
+    constructor(
+        private readonly prisma: PrismaService,
+        private readonly redisService: RedisCacheService,
+    ) { }
 
-    listUsers() {
-        return this.prisma.users.findMany();
+    async listUsers() {
+
+        const usersCache = await this.redisService.getFromRedis('users-cache');
+
+        if (usersCache) {
+            return usersCache;
+        }
+
+        const users = await this.prisma.users.findMany();
+
+        await this.redisService.saveRedis('users-cache', users, 30);
+
+        return users;
+
     }
 
     async create(userName: string, userEmail: string, userPassword: string) {
@@ -52,7 +68,7 @@ export class UsersService {
 
                 resolve(newUser);
 
-            }, 35000);
+            }, 5000);
 
         });
 

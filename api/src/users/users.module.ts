@@ -2,7 +2,8 @@ import { Module } from '@nestjs/common';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { PrismaService } from '../prisma.service';
-import { RabbitmqService } from 'src/rabbitmq/rabbitmq.service';
+import { RabbitmqService } from '../rabbitmq/rabbitmq.service';
+import { RedisCacheService } from '../redis-cache/redis-cache.service';
 
 @Module({
     controllers: [UsersController],
@@ -10,6 +11,7 @@ import { RabbitmqService } from 'src/rabbitmq/rabbitmq.service';
         UsersService,
         PrismaService,
         RabbitmqService,
+        RedisCacheService,
     ],
 })
 export class UsersModule {
